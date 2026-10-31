@@ -355,7 +355,7 @@
   <!--form action="" method="post" class="quiz-form" id="quiz-<?php echo $quiz_id?>"-->
   <?php $mtq_all_vars.="<input type='hidden' id='mtq_id-{$mtqid}' name='mtq_id_value' value='{$mtqid}' />"; ?>
   <div id="mtq_quiztitle-<?php echo $mtqid ?>" class="mtq_quiztitle" <?php if ( ! $show_title ) { echo "style='display:none'"; } ?>>
-  <h2><?php echo stripslashes($quiz_options->name)?></h2>
+  <h2><?php echo wp_kses_post($quiz_options->name)?></h2>
   </div>
     <?php if ($mtq_use_timer) {?>
   <div id="mtq_timer_row-<?php echo $mtqid ?>"><div id="mtq_timer_box-<?php echo $mtqid ?>" class="mtq_timer"></div> </div>
@@ -369,12 +369,12 @@
   </div></div>
   </noscript>
   <?php if ($show_start) {?>
-  <div id="mtq_instructions-<?php echo $mtqid ?>" class="mtq_instructions"><?php echo stripslashes($quiz_options->description)?></div> <div id="mtq_start_button-<?php echo $mtqid ?>" class='mtq_action_button mtq_css_button mtq_start_button' onclick='mtq_start_quiz(<?php echo $mtqid ?>)'> <div class="mtq_start_text">
+  <div id="mtq_instructions-<?php echo $mtqid ?>" class="mtq_instructions"><?php echo wp_kses_post($quiz_options->description)?></div> <div id="mtq_start_button-<?php echo $mtqid ?>" class='mtq_action_button mtq_css_button mtq_start_button' onclick='mtq_start_quiz(<?php echo $mtqid ?>)'> <div class="mtq_start_text">
   <?php _e("Start", 'mtouchquiz'); ?>
   </div> </div>
   <?php } 
 if ($show_final ) {?>
-<div id="mtq_quiz_results_bubble-<?php echo $mtqid ?>" class="mtq_quiz_results_bubble"> <div id="mtq_quiz_results-<?php echo $mtqid ?>" class="mtq_quiz_results"><?php echo str_replace('%%QUIZ_NAME%%','<em>'.stripslashes($quiz_options->name).'</em>',$final_screen);?> <br>    
+<div id="mtq_quiz_results_bubble-<?php echo $mtqid ?>" class="mtq_quiz_results_bubble"> <div id="mtq_quiz_results-<?php echo $mtqid ?>" class="mtq_quiz_results"><?php echo str_replace('%%QUIZ_NAME%%','<em>'.wp_kses_post($quiz_options->name).'</em>',$final_screen);?> <br>    
   </div><?php if  ( $mtq_form_present && ! ( $inform ) ) { ?>
     <div id="mtq_contact_form-<?php echo $mtqid ?>"> <?php echo ($form_code); ?> </div>
     <?php } ?> <div id="mtq_quiz_results_highlight-<?php echo $mtqid ?>" class="mtq_quiz_results_highlight">
@@ -416,7 +416,7 @@ if ($show_final ) {?>
 												echo   "<div id='mtq_stamp-$question_count-$mtqid' class='mtq_stamp'></div>";
 												echo   "</td></tr></table>";
 												echo "<div id='mtq_question_text-$question_count-$mtqid' class='mtq_question_text'>";
-											echo   stripslashes($ques->question) ;
+											echo   wp_kses_post($ques->question) ;
 											echo "</div>";
 											$mtq_all_vars.=   "<input type='hidden' name='question_id[]' value='{$ques->ID}'/>";
 											$mtq_all_vars.=   "<input type='hidden' id='mtq_is_answered-{$question_count}-$mtqid' value='0'/>";
@@ -451,7 +451,7 @@ if ($show_final ) {?>
 														
 														echo   "</td>";
 														echo   "<td class='mtq_answer_td'>";
-															echo   "<div id='mtq_answer_text-{$question_count}-{$answer_count}-$mtqid' class='mtq_answer_text'>".stripslashes($ans->answer)."</div>";
+															echo   "<div id='mtq_answer_text-{$question_count}-{$answer_count}-$mtqid' class='mtq_answer_text'>".wp_kses_post($ans->answer)."</div>";
 															$is_correct_value = '0';
 															if($ans->correct) $is_correct_value = '1';
 															$mtq_all_vars.=   "<input type='hidden' id='mtq_is_correct-{$question_count}-{$answer_count}-$mtqid' value='$is_correct_value'/>";
@@ -463,7 +463,7 @@ if ($show_final ) {?>
 															if ( $has_hint_value && $show_hints ) {
 															echo   "<div id='mtq_hint-$question_count-$answer_count-$mtqid' class='mtq_hint'>";					
 																echo   "<div class='mtq_hint_label'>".__('Hint', 'mtouchquiz').": </div>";
-																echo   "<div class='mtq_hint_text'>".stripslashes($ans->hint)."</div>";
+																echo   "<div class='mtq_hint_text'>".wp_kses_post($ans->hint)."</div>";
 															echo   "</div>";
 															}
 														echo   "</td>";
@@ -479,7 +479,7 @@ if ($show_final ) {?>
 														echo   "<div class='mtq_explanation-label'>";
 															 printf(__('Question %d Explanation:', 'mtouchquiz'), $question_count);
 														echo   "&nbsp;</div>";
-														echo   "<div class='mtq_explanation-text'> ".stripslashes($ques->explanation."</div>");
+														echo   "<div class='mtq_explanation-text'> ".wp_kses_post($ques->explanation."</div>");
 												echo   "</div>";
 												//echo   "<input type='hidden' id='mtq_has_explanation-$question_count-$mtqid' value='1' />";
 											} else {
@@ -670,7 +670,7 @@ if ($show_final ) {?>
 									foreach ($all_ratings as $quiz_rating) 
 									{
 										echo "<input type='hidden' id='mtq_ratingval-$counter-$mtqid' value='$quiz_rating->min_points'/>";
-                            			echo "<div id='mtq_rating-$counter-$mtqid' class='mtq_preload'>".trim(stripslashes($quiz_rating->score_rating))."</div>";
+                            			echo "<div id='mtq_rating-$counter-$mtqid' class='mtq_preload'>".wp_kses_post(trim($quiz_rating->score_rating))."</div>";
 										$counter++;
 									}
 									

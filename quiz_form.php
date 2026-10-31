@@ -43,7 +43,7 @@ if($action == 'edit') {
           </span> </h3>
           <!--p align="right"> <a class="button toggleVisualtwo"><?php _e('Visual', 'mtouchquiz') ?></a> <a class="button toggleHTMLtwo"><?php _e('HTML', 'mtouchquiz') ?></a> </p-->
         <div class="inside">
-        <textarea rows='1' cols='50' style='width:100%' name='name' id='name' class='name'><?php echo stripslashes($dquiz->name); ?></textarea>
+        <textarea rows='1' cols='50' style='width:100%' name='name' id='name' class='name'><?php echo esc_textarea(wp_unslash($dquiz->name)); ?></textarea>
           <!--input type='text' name='name' id="title" value='<?php //echo stripslashes($dquiz->name); ?>' /-->
         </div>
       </div>
@@ -53,7 +53,7 @@ if($action == 'edit') {
           </span> </h3>
         <!--p align="right"> <a class="button toggleVisual"><?php _e('Visual', 'mtouchquiz') ?></a> <a class="button toggleHTML"><?php _e('HTML', 'mtouchquiz') ?></a> </p-->
         <div class="inside">
-          <textarea name='description' rows='5' cols='50' style='width:100%' id='description' class='description'><?php echo stripslashes($dquiz->description); ?></textarea>
+          <textarea name='description' rows='5' cols='50' style='width:100%' id='description' class='description'><?php echo esc_textarea(wp_unslash($dquiz->description)); ?></textarea>
         </div>
       </div>
             <div class="postbox mtq_premium_feature"><div class="mtq_email"></div>
@@ -82,13 +82,13 @@ if($action == 'edit') {
 	
 	if ( ! $mtq_gf_addon_active && ! $mtq_cf7_addon_active ) { ?>
           <h4> <?php _e('To allow users to submit their results to you via email, you need a ','mtouchquiz'); echo '<a href="http://gmichaelguy.com/quizplugin/go/premium/" title="mTouch Quiz Premium Feature Addon" target="_blank">mTouch Quiz Premium Feature</a> addon. '; ?></h4>
-      <span style="display:none"><textarea name="gravity" rows="1" cols="100"><?php echo $form_code ?></textarea></span>
+      <span style="display:none"><textarea name="gravity" rows="1" cols="100"><?php echo esc_textarea($form_code); ?></textarea></span>
       <?php } else {
 		   ?>
            <h4> <?php _e('<a href="http://gmichaelguy.com/quizplugin/go/premium/" title="Find out about mTouch Quiz Premium Feature Addons">For detailed instructions on how to configure this option visit the plugin homepage.</a>', 'mtouchquiz'); 
 		   
 		   ?></h4>
-		  <textarea name="gravity" rows="1" cols="100"><?php echo $form_code ?></textarea>
+		  <textarea name="gravity" rows="1" cols="100"><?php echo esc_textarea($form_code); ?></textarea>
 	<?php  } ?>
       
       </div></div>
@@ -363,6 +363,7 @@ if($action == 'edit') {
       <?php
 	  if ($mtq_theme_allgood) {
 	  	$mtq_color_theme=get_option("mtouchquiz_color");
+      if (!in_array($mtq_color_theme, mtq_color_options(), true)) { $mtq_color_theme = "blue"; }
 	  } else {
 		 $mtq_color_theme="blue"; 
 	  }

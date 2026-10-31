@@ -46,7 +46,7 @@ if (count($all_quiz)) {
 		print "<tr id='quiz-{$quiz->ID}' class='$class'>\n";
 		?>
     <th scope="row" style="text-align: center;"><?php echo $quiz->ID ?></th>
-      <td><?php echo stripslashes(sanitize_text_field($quiz->name))?></td>
+      <td><?php echo esc_html(sanitize_text_field($quiz->name))?></td>
       <td><?php echo $quiz->question_count ?></td>
       <td><?php echo date(get_option('date_format') . ' ' . get_option('time_format'), strtotime($quiz->added_on)) ?></td>
       <td><a href='edit.php?page=mtouch-quiz/question.php&amp;quiz=<?php echo $quiz->ID?>' class='edit'>

@@ -151,10 +151,10 @@ for($i=1; $i<=$answer_count; $i++) { ?>
                         </label></td>
                     </tr>
                   </table></td>
-                <td><textarea name="answer[]" class="answer" rows="3" cols="50"><?php if($action == 'edit') echo stripslashes($all_answers[$i-1]->answer); ?>
+                <td><textarea name="answer[]" class="answer" rows="3" cols="50"><?php if($action == 'edit') echo esc_textarea($all_answers[$i-1]->answer); ?>
 </textarea></td>
                 <td> <?php _e("Hint"); ?>
-                  <textarea name="hint[]" class="hint" rows="3" cols="50"><?php if($action == 'edit') echo stripslashes($all_answers[$i-1]->hint); ?>
+                  <textarea name="hint[]" class="hint" rows="3" cols="50"><?php if($action == 'edit') echo esc_textarea($all_answers[$i-1]->hint); ?>
 </textarea>
                   </p></td>
               </tr>
@@ -171,7 +171,7 @@ for($i=1; $i<=$answer_count; $i++) { ?>
             <?php _e('Explanation', 'mtouchquiz') ?>
             </span></h3>
           <div class="inside">
-            <textarea name="explanation" rows="5" cols="50"><?php echo stripslashes($question->explanation)?></textarea>
+            <textarea name="explanation" rows="5" cols="50"><?php echo esc_textarea($question->explanation)?></textarea>
             <br />
             <p>
               <?php _e('You can use this field to explain the correct answer. This will be shown whenever correct answers are revealed.', 'mtouchquiz') ?>

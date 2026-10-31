@@ -14,8 +14,13 @@ wp_print_scripts();
     
       <?php
 	  $mtq_just_updated=false;
-	  if ($_POST['mtq_theme_update'] == 'Y') {
-		  update_option('mtouchquiz_color', $_POST['color']);
+	  if (isset($_POST['mtq_theme_update']) && $_POST['mtq_theme_update'] === 'Y'
+          && current_user_can('manage_options')
+          && isset($_POST['_wpnonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['_wpnonce'])), 'mtq_theme_update')) {
+          $submitted_color = isset($_POST['color']) ? sanitize_key(wp_unslash($_POST['color'])) : '';
+          if (in_array($submitted_color, mtq_color_options(), true)) {
+              update_option('mtouchquiz_color', $submitted_color);
+          }
 		  $mtq_just_updated=true;
 	  }
 	  
@@ -82,7 +87,7 @@ wp_print_scripts();
   <hr />
   <strong>Select a Color from the drop down list:</strong><br />
   <form id="mtouchquiz" name="mtouchquiz" action="" method='POST'>
-  <input type="hidden" name="mtq_theme_update" value="Y">
+  <input type="hidden" name="mtq_theme_update" value="Y"><?php wp_nonce_field("mtq_theme_update"); ?>
   <select name="color">
   <?php $mtq_possible_colors = mtq_color_options();
   $current_color=get_option("mtouchquiz_color"); 

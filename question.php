@@ -11,13 +11,13 @@ if(isset($_REQUEST['submit']) && check_admin_referer('mtq_question_form') ) {
 	//$question_id = $_REQUEST['question'];
 	$point_value = intval($_REQUEST['point_value']);
 	if($action == 'edit'){ //Update goes here //, $_REQUEST['question']
-		$wpdb->query($wpdb->prepare("UPDATE {$wpdb->prefix}mtouchquiz_question SET question=%s, explanation=%s, number_correct=%d, point_value=%d WHERE ID=%d", $_REQUEST['content'], $_REQUEST['explanation'], $num_correct,$point_value,$_REQUEST['question'] ));
+		$wpdb->query($wpdb->prepare("UPDATE {$wpdb->prefix}mtouchquiz_question SET question=%s, explanation=%s, number_correct=%d, point_value=%d WHERE ID=%d", wp_kses_post(wp_unslash($_REQUEST['content'])), wp_kses_post(wp_unslash($_REQUEST['explanation'])), $num_correct,$point_value,$_REQUEST['question'] ));
 		$wpdb->query($wpdb->prepare("DELETE FROM {$wpdb->prefix}mtouchquiz_answer WHERE question_id=%d", $_REQUEST['question']));
 		
 		wpframe_message(__('Question updated.', 'mtouchquiz'));
 		
 	} else {
-		$wpdb->query($wpdb->prepare("INSERT INTO {$wpdb->prefix}mtouchquiz_question(quiz_id, question, explanation,number_correct, point_value) VALUES(%d, %s, %s, %d, %d)", $_REQUEST['quiz'], $_REQUEST['content'], $_REQUEST['explanation'],  $num_correct, $point_value));//Inserting the questions
+		$wpdb->query($wpdb->prepare("INSERT INTO {$wpdb->prefix}mtouchquiz_question(quiz_id, question, explanation,number_correct, point_value) VALUES(%d, %s, %s, %d, %d)", $_REQUEST['quiz'], wp_kses_post(wp_unslash($_REQUEST['content'])), wp_kses_post(wp_unslash($_REQUEST['explanation'])),  $num_correct, $point_value));//Inserting the questions
 		wpframe_message(__('Question added.', 'mtouchquiz'));
 		$_REQUEST['question'] = $wpdb->insert_id;
 		$action='edit';
@@ -50,7 +50,7 @@ if(isset($_REQUEST['submit']) && check_admin_referer('mtq_question_form') ) {
 				$show_hint=1;
 			}
 			$wpdb->query($wpdb->prepare("INSERT INTO {$wpdb->prefix}mtouchquiz_answer(question_id,answer,hint,correct,sort_order) 
-				VALUES(%d, %s, %s, %s, %d)", $question_id, $answer_text, $hint_text, $correct, $sort_order_counter)); 
+				VALUES(%d, %s, %s, %s, %d)", $question_id, wp_kses_post(wp_unslash($answer_text)), wp_kses_post(wp_unslash($hint_text)), $correct, $sort_order_counter)); 
 			$sort_order_counter++;
 		}
 		$counter++;
@@ -132,7 +132,7 @@ if (count($all_question)) {
 		print "<tr id='question-{$question->ID}' class='$class'>\n";
 		?>
     <th scope="row" style="text-align: center;"><?php echo $question_count ?></th>
-      <td><?php echo stripslashes($question->question) ?></td>
+      <td><?php echo esc_html(wp_strip_all_tags($question->question)) ?></td>
       <td><?php echo $question->answer_count ?></td>
       <td><?php echo $question->number_correct ?></td>
       <td><?php echo $question->point_value ?></td>

@@ -4,7 +4,7 @@ Donate link: http://gmichaelguy.com/quizplugin/go/donate/
 Tags: quiz, question, answer, test, touch, education, learning, elearning
 Requires at least: 3.0
 Tested up to: 4.9.4
-Stable tag: 3.1.3
+Stable tag: 3.1.4
 
 mTouch Quiz lets you add quizzes to your site. This plugin was designed with learning, touch friendliness and versatility in mind.
 
@@ -38,6 +38,14 @@ You can find the most up to date version at the [ homepage of mTouch Quiz Plugin
 5. List view for easy navigation of longer quizzes
 
 == Changelog ==
+
+= 3.1.4 =
+* Sanitized quiz names, descriptions and settings on storage.
+* Sanitized questions, answers, hints and ratings.
+* Added context-appropriate output escaping.
+* Restricted theme colors to an approved allowlist.
+* Added administrator capability and nonce checks to theme settings.
+* Used WordPress wp_kses_post() to prevent stored script injection while preserving permitted HTML.
 
 = 3.1.3 =
 * Corrected several potential security vulnerabilities. Thanks to David Sopas @dsopas for very kindly pointing them out and suggesting effective solutions.
